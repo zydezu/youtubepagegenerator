@@ -455,8 +455,12 @@ clearLocalStorage = () => {
 // header transparency
 
 var header = document.getElementById("navBar");
-var sticky = 10;
+var sticky = 5;
 document.addEventListener("scroll", () => {
-    if (window.scrollY > sticky) header.classList.add("solid");
-    else header.classList.remove("solid");
+    if (window.scrollY > sticky){
+        header.classList.add("solid")
+    }
+    else {
+        header.classList.remove("solid")
+    };
 });
