@@ -1,4 +1,5 @@
 import subprocess, os
+import sys
 import webbrowser
 
 os.system("")
@@ -8,13 +9,16 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
-# use rangehttpserver as it supports range headers (fixes video scrubbing in the browser)
-print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-print(f"{bcolors.OKBLUE}Installing packages...")
-print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-subprocess.run('pip install -r requirements.txt')
-print(f"{bcolors.LINE}---------------------------------------")
+reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
+installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 
+# use rangehttpserver as it supports range headers (fixes video scrubbing in the browser)
+if 'rangehttpserver' not in installed_packages:
+    print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
+    print(f"{bcolors.OKBLUE}Installing packages...")
+    print(f"{bcolors.LINE}---------------------------------------")
+    subprocess.run('pip install -r requirements.txt')
+    print(f"{bcolors.LINE}---------------------------------------")
 
 print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
 print(f"{bcolors.LINE}---------------------------------------")
