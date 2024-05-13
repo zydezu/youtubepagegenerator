@@ -41,29 +41,35 @@ class VideoWithBackground {
             this.init()
         }
         this.offscreenCanvas = new OffscreenCanvas(this.canvas.width, this.canvas.height);
-        this.offscreenCtx = this.offscreenCanvas.getContext('2d', {alpha: false});
+        this.offscreenCtx = this.offscreenCanvas.getContext('2d', { alpha: false });
         this.ctx.filter = "blur(5px)";
         this.currentlyDrawing = true;
-        // this.init()
+        this.drawi = 0
+        setTimeout(() => {
+            this.drawInit();
+        }, 100)     
     }
 
-    init = () => {
-        // this.ctx.filter = "blur(5px)";
+    drawInit = () => {
+        this.draw()
+        this.drawi++
+        console.log("draw");
 
+        if (this.drawi < 5) setTimeout(this.drawInit, 35);
+    }   
+
+
+    init = () => {
         if (localStorage.ambientMode == "true" && localStorage.currentTheme == "dark") {
-            this.video.addEventListener("loadeddata", this.draw, false);
             this.video.addEventListener("seeked", this.draw, false);
             this.video.addEventListener("play", this.drawLoop, false);
-            // this.video.addEventListener("pause", this.drawPause, false);
             this.video.addEventListener("ended", this.drawPause, false);
         }
     };
 
     cleanup = () => {
-        this.video.removeEventListener("loadeddata", this.draw);
         this.video.removeEventListener("seeked", this.draw);
         this.video.removeEventListener("play", this.drawLoop);
-        // this.video.removeEventListener("pause", this.drawPause);
         this.video.removeEventListener("ended", this.drawPause);
     };
 
@@ -87,7 +93,7 @@ class VideoWithBackground {
             this.video.addEventListener("pause", this.drawPause, false);
             this.video.addEventListener("ended", this.drawPause, false);
             this.drawLoop();
-            } else {
+        } else {
             this.turnOffAmbientMode();
         }
     }

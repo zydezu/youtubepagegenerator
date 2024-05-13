@@ -1,4 +1,4 @@
-@import url("https://rsms.me/inter/inter.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 /*light and dark mode themes and colours*/
 :root {
@@ -59,8 +59,6 @@
 
 :root {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-feature-settings: 'liga' 1, 'calt' 1;
-    /* fix for Chrome */
 }
 
 ::-webkit-scrollbar {
@@ -113,7 +111,7 @@ body {
 .main {
     padding: 25px;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 30px;
     max-width: 180vh;
     display: flex;
     flex-direction: row;
@@ -131,7 +129,6 @@ body {
     backdrop-filter: blur(10px);
     z-index: 1;
     display: flex;
-    transition: background-color 0.2s;
 }
 
 .navigationBar.solid {
@@ -161,29 +158,8 @@ body {
     box-shadow: var(--settings-shadow);
     animation: boxPopUp 0.15s cubic-bezier(0.22, 0.61, 0.36, 1);
     overflow-y: auto;
-}
-
-@media (prefers-reduced-motion) {
-    #settingsBox {
-        transition: none;
-    }
-
-    button:active {
-        transition: none;
-        transform: none;
-    }
-
-    a:link {
-        transition: none;
-    }
-
-    .SNSIcon {
-        transition: none;
-    }
-
-    .ambientCanvas {
-        display: none !important;
-    }
+    transition: color 0.2s ease-out;
+    transition: background-color 0.2s ease-out;
 }
 
 .backgroundBlur {
@@ -301,8 +277,7 @@ body {
 }
 
 #commentsBox {
-    /* min-width: 300px; */
-    max-width: calc(200px + 15vw);
+    max-width: calc(100px + 15vw);
 }
 
 @media screen and (max-width: 950px) {
@@ -345,6 +320,12 @@ body {
     }
 }
 
+@media (prefers-reduced-motion) {
+    body {
+        transition: none;
+    }
+}
+
 /*button*/
 button {
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -359,6 +340,12 @@ button {
 
 button:active {
     transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion) {
+    button:active {
+        transform: none;
+    }
 }
 
 button:hover,
@@ -391,6 +378,12 @@ a:focus {
     outline: 2px solid rgba(255, 255, 255, 0.8);
 }
 
+@media (prefers-reduced-motion) {
+    a:link {
+        transition: none;
+    }
+}
+
 summary {
     cursor: pointer;
 }
@@ -402,7 +395,6 @@ dialog {
     min-width: 300px;
     border-radius: 15px;
 }
-
 
 
 /*video*/
@@ -455,6 +447,12 @@ video {
     .ambientCanvas {
         width: 100%;
         height: 65vw;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ambientCanvas {
+        display: none !important;
     }
 }
 

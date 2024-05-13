@@ -1,6 +1,7 @@
 import subprocess, os
 import sys
 import webbrowser
+from datetime import datetime
 
 os.system("")
 class bcolors:
@@ -56,6 +57,28 @@ with open('template.txt', 'r') as file:
     outputfile = templatefile.format(videotitle=videotitle, filename=filename, icon=imagepath)
     with open("generated/{0}/index.html".format(videoid), "w") as writefile:
         writefile.writelines(outputfile)
+
+allLines = []
+with open('listofvideos.txt', 'a') as file:
+    file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+
+with open('listofvideos.txt', 'r') as file:
+    allLines = file.readlines()
+
+with open('index.html', 'w') as file:
+    file.writelines("""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>body{{margin:15px;}}</style>
+</head>
+<body>
+{0}
+</body>
+</html>""".format("".join(allLines)))
 
 print("File written to index.html!")
 

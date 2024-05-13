@@ -4,7 +4,7 @@ Generates a HTML page for a YouTube video with a provided link via Python.
 
 ## Requirements
 
-- Python 
+- Python
 - yt-dlp (on path) or via included yt-dlp.exe
 
 ## Usage
@@ -16,6 +16,7 @@ Outputted pages will be in `generated/[videoID]/`, pages will open automatically
 ## Changelog
 
 ### 2024-04-07
+
 - Included a yt-dlp.exe for new users
 - Packages are now checked instead of always attempting to install from `requirements.txt`
 
@@ -23,4 +24,4 @@ Outputted pages will be in `generated/[videoID]/`, pages will open automatically
 
 - Download subtitles and convert them to WEBVTT automatically
 - Wait for yt-dlp to fix comments downloading
-- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page https://internetcheckpoint.page/Q9XTqQbuavI
+- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page <https://internetcheckpoint.page/Q9XTqQbuavI>
