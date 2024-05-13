@@ -23,6 +23,7 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 - Fixed downloading comments with a different build of yt-dlp.exe
 - Changed css and scripts
 - Added an `index.html` with all archived videos listed
+- Fix 4:3 videos
 
 ### 2024-04-07
 
