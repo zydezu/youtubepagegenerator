@@ -11,7 +11,8 @@ Generates a HTML page for a YouTube video with a provided link via Python.
 
 Run `generatepage.py`  and paste in the link of the desired video. Designed specifically for YouTube videos, results from other sites may vary.
 
-Outputted pages will be in `generated/[videoID]/`, pages will open automatically in your browser via `localhost`
+Outputted pages will be in `generated/[videoID]/`, pages will open automatically in your browser via `
+http://localhost:8000/...`
 
 ## Changelog
 
@@ -24,4 +25,4 @@ Outputted pages will be in `generated/[videoID]/`, pages will open automatically
 
 - Download subtitles and convert them to WEBVTT automatically
 - Wait for yt-dlp to fix comments downloading
-- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page <https://internetcheckpoint.page/Q9XTqQbuavI>
+- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page https://internetcheckpoint.page/Q9XTqQbuavI
