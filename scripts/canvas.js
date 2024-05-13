@@ -53,8 +53,6 @@ class VideoWithBackground {
     drawInit = () => {
         this.draw()
         this.drawi++
-        console.log("draw");
-
         if (this.drawi < 5) setTimeout(this.drawInit, 35);
     }   
 
