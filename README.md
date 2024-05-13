@@ -14,7 +14,15 @@ Run `generatepage.py`  and paste in the link of the desired video. Designed spec
 Outputted pages will be in `generated/[videoID]/`, pages will open automatically in your browser via `
 http://localhost:8000/...`
 
+Alternatively, run `runserver.py` to open a page with a list of archived videos
+
 ## Changelog
+
+### 2024-05-13
+
+- Fixed downloading comments with a different build of yt-dlp.exe
+- Changed css and scripts
+- Added an `index.html` with all archived videos listed
 
 ### 2024-04-07
 
@@ -24,5 +32,4 @@ http://localhost:8000/...`
 ## To Do
 
 - Download subtitles and convert them to WEBVTT automatically
-- Wait for yt-dlp to fix comments downloading
-- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page https://internetcheckpoint.page/Q9XTqQbuavI
+- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page <https://internetcheckpoint.page/Q9XTqQbuavI>
