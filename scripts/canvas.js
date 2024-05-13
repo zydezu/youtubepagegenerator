@@ -47,12 +47,12 @@ class VideoWithBackground {
         this.drawi = 0
         setTimeout(() => {
             this.drawInit();
-        }, 100)     
+        }, 100)
     }
 
     drawInit = () => {
-        this.draw()
-        this.drawi++
+        this.draw();
+        this.drawi++;
         if (this.drawi < 5) setTimeout(this.drawInit, 35);
     }   
 
@@ -100,7 +100,6 @@ class VideoWithBackground {
         console.log("Stopping ambient mode")
         this.currentlyDrawing = false;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.video.removeEventListener("loadeddata", this.draw);
         this.video.removeEventListener("seeked", this.draw);
         this.video.removeEventListener("play", this.drawLoop);
         this.drawPause();
@@ -136,3 +135,11 @@ Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
         return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
     }
 })
+
+document.getElementById("ambientvideo").addEventListener("loadeddata", checkResolution)
+
+function checkResolution() {
+    if (this.videoWidth / this.videoHeight < 1.6) { //4/3 wont fit
+        document.documentElement.setAttribute("style", "--maxwidth: 150vh");
+    }
+}

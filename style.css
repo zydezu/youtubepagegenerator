@@ -9,6 +9,8 @@
 
     --accent-color: #fa5252;
     --highlight-color: rgba(255, 50, 60, 0.8);
+
+    --maxwidth: 180vh;
 }
 
 :root,
@@ -112,7 +114,7 @@ body {
     padding: 25px;
     margin: 0 auto;
     margin-top: 30px;
-    max-width: 180vh;
+    max-width: var(--maxwidth);
     display: flex;
     flex-direction: row;
 }
@@ -281,6 +283,46 @@ body {
 }
 
 @media screen and (max-width: 950px) {
+    .main {
+        padding: 0;
+        display: block;
+    }
+
+    .mainVideo {
+        border-radius: 0;
+    }
+
+    .videoArea {
+        max-width: 100%;
+        padding-top: 20px;
+    }
+
+    .underVideoStats {
+        padding: 5px 15px 0 15px;
+    }
+
+    .sideBar {
+        min-width: unset;
+        height: unset;
+        max-height: 100%;
+        padding-left: unset;
+        overflow-y: unset;
+        -webkit-mask: unset;
+        mask: unset;
+        padding: 0 15px 0 15px;
+    }
+
+    #commentsBox {
+        width: 100%;
+        max-width: unset;
+    }
+
+    .switchCommentsLayout {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 350px) {
     .main {
         padding: 0;
         display: block;
