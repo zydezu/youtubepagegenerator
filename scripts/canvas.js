@@ -140,6 +140,6 @@ document.getElementById("ambientvideo").addEventListener("loadeddata", checkReso
 
 function checkResolution() {
     if (this.videoWidth / this.videoHeight < 1.6) { //4/3 wont fit
-        document.documentElement.setAttribute("style", "--maxwidth: 150vh");
+        document.documentElement.setAttribute("style", "--maxwidth: 135vh");
     }
 }
