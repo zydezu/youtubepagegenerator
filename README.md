@@ -18,6 +18,11 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 
 ## Changelog
 
+### 2024-06-23
+
+- Reduce code redundancy
+- Write automatic subtitles
+
 ### 2024-05-13
 
 - Fixed downloading comments with a different build of yt-dlp.exe
