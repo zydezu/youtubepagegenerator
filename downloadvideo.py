@@ -14,11 +14,11 @@ def startvideodownload():
     print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
     print(f"{bcolors.OKBLUE}Downloading video...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-    videoid = subprocess.check_output('yt-dlp --skip-download {0} --print %(id)s'.format(link)).decode('utf-8').replace('\n', '')
-    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print %(title)s'.format(link)).decode('utf-8').replace('\n', '')
+    videoid = subprocess.check_output('yt-dlp --skip-download {0} --print "%(id)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
+    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
     quality = """ -f bestvideo+bestaudio --remux mp4 """
     command = "yt-dlp" + quality + link + " --restrict-filenames --add-metadata --embed-subs --write-subs --write-auto-subs --write-comments --write-thumbnail -P generated/{0}/videos".format(videoid)
-    subprocess.run(command)
+    subprocess.run(command, shell=True)
 
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Generating page...")
@@ -68,3 +68,5 @@ def startvideodownload():
     </html>""".format("".join(allLines)))
 
     print("File written to index.html!")
+
+    return videoid

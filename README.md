@@ -18,6 +18,10 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 
 ## Changelog
 
+### 2024-07-03
+
+- Fix for unix
+
 ### 2024-06-23
 
 - Reduce code redundancy
