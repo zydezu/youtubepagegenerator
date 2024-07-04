@@ -15,7 +15,7 @@ def startvideodownload():
     print(f"{bcolors.OKBLUE}Downloading video...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     videoid = subprocess.check_output('yt-dlp --skip-download {0} --print "%(id)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
-    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s"'.format(link), shell=True).decode('windows-1252').replace('\n', '')
+    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
     quality = """ -f bestvideo+bestaudio --remux mp4 """
     command = "yt-dlp" + quality + link + " --restrict-filenames --add-metadata --embed-subs --write-subs --write-auto-subs --write-comments --write-thumbnail -P generated/{0}/videos".format(videoid)
     subprocess.run(command, shell=True)
