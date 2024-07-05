@@ -120,7 +120,12 @@ async function read(returndata) {
         <hr>
         `;
     await getDislikes(data.id);
-    renderComments(data);
+
+    if (data.comments) {
+        renderComments(data);
+    } else {
+        noCommentsMessage();
+    }
 }
 
 function makeLinks(content) {
@@ -132,6 +137,11 @@ function makeLinks(content) {
         return '<a target="_blank" href="' + match + '">' + match + '</a>';
     });
     return content
+}
+
+function noCommentsMessage() {
+    commentCount.innerHTML = `${oldCommentPosition ? `<br/>` : ``} No comments...<br/>
+    <button class="switchCommentsLayout" onclick="switchCommentsLayout()">Switch comment layout</button>`;
 }
 
 async function renderComments() {
