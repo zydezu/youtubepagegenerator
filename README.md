@@ -5,7 +5,6 @@ Generates a HTML page for a YouTube video with a provided link via Python.
 ## Requirements
 
 - Python
-- yt-dlp (on path) or via included yt-dlp.exe
 
 ## Usage
 
@@ -21,6 +20,7 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 ### 2024-07-07
 
 - Fix unicode errors (hopefully once and for all...)
+- Code now uses the yt-dlp python package
 
 ### 2024-07-03
 

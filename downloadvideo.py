@@ -7,6 +7,18 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
+reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
+installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
+
+if 'yt-dlp' not in installed_packages:
+    print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
+    print(f"{bcolors.OKBLUE}Installing packages...")
+    print(f"{bcolors.LINE}---------------------------------------")
+    subprocess.run('pip install -r requirements.txt', shell=True)
+    print(f"{bcolors.LINE}---------------------------------------")
+
+from yt_dlp import YoutubeDL
+
 def startvideodownload():
     print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
     print(f"{bcolors.LINE}---------------------------------------")
@@ -14,15 +26,47 @@ def startvideodownload():
     print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
     print(f"{bcolors.OKBLUE}Downloading video...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-    videoid = subprocess.check_output('yt-dlp --skip-download {0} --print "%(id)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
-    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s "'.format(link), shell=True).decode(sys.getdefaultencoding()).replace('\n', '')
-    
-    quality = """ -f bestvideo+bestaudio --remux mp4 """
-    command = "yt-dlp" + quality + link + " --restrict-filenames --add-metadata --embed-subs --write-subs --write-auto-subs --write-comments --write-thumbnail -P generated/{0}/videos".format(videoid)
-    subprocess.run(command, shell=True)
+
+    ytdlp_opts = {
+        "skip_download": True,
+        'quiet': True
+    }
+
+    with YoutubeDL(ytdlp_opts) as ytdlp:
+        info_dict = ytdlp.extract_info(link, download=False)
+        videoid = info_dict.get('id', None)
+        videotitle = info_dict.get('title', None)
+
+    ytdlp_opts = {
+        'format': 'bestvideo+bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegVideoRemuxer',
+            'preferedformat': 'mp4',
+        }],
+        'restrictfilenames': True,
+        'addmetadata': True,
+        'subtitlesformat': 'best',
+        'writesubtitles': True,
+        'writeautomaticsub': True,
+        'writeinfojson': True,
+        'getcomments': True,
+        'writethumbnail': True,
+        'outtmpl': f'generated/{videoid}/videos/%(title)s.%(ext)s',
+    }
+
+    while True:
+        try:
+            with YoutubeDL(ytdlp_opts) as ytdlp:
+                ytdlp.download(link)
+            break
+        except:
+                print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}Error! Retrying download...")
+                print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+
 
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-    print(f"{bcolors.OKBLUE}Generating page...")
+    print(f"{bcolors.OKBLUE}Download done! Generating page...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
 
     def basestring(lst):
