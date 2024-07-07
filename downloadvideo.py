@@ -1,4 +1,4 @@
-import subprocess, os
+import subprocess, os, sys
 from datetime import datetime
 
 class bcolors:
@@ -15,7 +15,8 @@ def startvideodownload():
     print(f"{bcolors.OKBLUE}Downloading video...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     videoid = subprocess.check_output('yt-dlp --skip-download {0} --print "%(id)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
-    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s"'.format(link), shell=True).decode('utf-8').replace('\n', '')
+    videotitle = subprocess.check_output('yt-dlp --skip-download {0} --print "%(title)s "'.format(link), shell=True).decode(sys.getdefaultencoding()).replace('\n', '')
+    
     quality = """ -f bestvideo+bestaudio --remux mp4 """
     command = "yt-dlp" + quality + link + " --restrict-filenames --add-metadata --embed-subs --write-subs --write-auto-subs --write-comments --write-thumbnail -P generated/{0}/videos".format(videoid)
     subprocess.run(command, shell=True)
@@ -39,20 +40,20 @@ def startvideodownload():
     filename = base + '.mp4'
     imagepath = base + '.webp'
 
-    with open('template.txt', 'r') as file:
+    with open('template.txt', 'r', encoding="utf-8") as file:
         templatefile = file.read()
         outputfile = templatefile.format(videotitle=videotitle, filename=filename, icon=imagepath)
-        with open("generated/{0}/index.html".format(videoid), "w") as writefile:
+        with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
             writefile.writelines(outputfile)
 
     allLines = []
-    with open('listofvideos.txt', 'a') as file:
+    with open('listofvideos.txt', 'a', encoding="utf-8") as file:
         file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-    with open('listofvideos.txt', 'r') as file:
+    with open('listofvideos.txt', 'r', encoding="utf-8") as file:
         allLines = file.readlines()
 
-    with open('index.html', 'w') as file:
+    with open('index.html', 'w', encoding="utf-8") as file:
         file.writelines("""<!DOCTYPE html>
     <html lang="en">
     <head>
