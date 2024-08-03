@@ -9,6 +9,10 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
+print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+print(f"{bcolors.OKBLUE}Opening page...")
+print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+
 reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
 installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 
