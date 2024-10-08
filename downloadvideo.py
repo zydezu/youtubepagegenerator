@@ -8,6 +8,7 @@ class bcolors:
     ENDC = '\033[0m'
 
 def startvideodownload():
+    os.system("title " + "YouTube Page Generator")
     print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
     print(f"{bcolors.LINE}---------------------------------------")
     link = input(f"{bcolors.WARNING}Link {bcolors.ENDC}> {bcolors.WARNING}")
@@ -19,6 +20,7 @@ def startvideodownload():
     installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 
     if 'yt-dlp' not in installed_packages:
+        os.system("title " + "Installing packages...")
         print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
         print(f"{bcolors.OKBLUE}Installing packages...")
         print(f"{bcolors.LINE}---------------------------------------")
@@ -54,6 +56,7 @@ def startvideodownload():
         'outtmpl': f'generated/{videoid}/videos/%(title)s.%(ext)s',
     }
 
+    os.system("title " + f"Downloading '{videotitle}' [{videoid}]...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
@@ -68,6 +71,7 @@ def startvideodownload():
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Download done! Generating page...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+    os.system("title " + "Generating page...")
 
     def basestring(lst):
         if not lst:

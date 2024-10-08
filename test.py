@@ -5,6 +5,18 @@ reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
 installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 
 os.system("")
+
+
+os.system("title " + "Downloading.......")
+
+
+input()
+
+
+
+
+
+
 class bcolors:
     OKBLUE = '\033[94m'
     WARNING = '\033[93m'
