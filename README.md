@@ -17,6 +17,14 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 
 ## Changelog
 
+### 2024-10-08
+
+- Add window title changing
+
+### 2024-08-03
+
+- Redo code to improve response times
+
 ### 2024-07-07
 
 - Fix unicode errors (hopefully once and for all...)
