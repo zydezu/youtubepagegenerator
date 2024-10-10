@@ -16,6 +16,12 @@ Alternatively, run `runserver.py` to open a page with a list of archived videos
 
 ## Changelog
 
+### 2024-10-10
+
+- Ambient mode is now OFF by default
+- Automatically disable ambient mode when frame drops occur
+- Added `updatecomments.py` which updates comment json files
+
 ### 2024-10-08
 
 - Add window title changing

@@ -24,14 +24,16 @@ if 'yt-dlp' not in installed_packages and 'rangehttpserver' not in installed_pac
 from yt_dlp import YoutubeDL
 
 videoIDs = next(os.walk(os.path.join(os.getcwd(), "generated")))[1]
+i = 0
 for video in videoIDs:
+    i+=1
     filenames = next(walk(os.path.join(os.getcwd(), "generated", video, "videos"), (None, None, [])))[2] # [] if no file
     filetorename = ""
     for file in filenames:
         if '.info.json' in file:
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}]...{bcolors.ENDC}")
-            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}]...")
+            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] | {i}/{len(videoIDs)}...{bcolors.ENDC}")
+            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] | {i}/{len(videoIDs)}...")
             infofilepath = os.path.join(os.getcwd(), "generated", video, "videos", file)
             unixtime = os.path.getmtime(os.path.join(infofilepath))
             os.rename(os.path.join(infofilepath), 
