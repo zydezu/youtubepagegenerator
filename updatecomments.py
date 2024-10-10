@@ -30,7 +30,7 @@ for video in videoIDs:
     filenames = next(walk(os.path.join(os.getcwd(), "generated", video, "videos"), (None, None, [])))[2] # [] if no file
     filetorename = ""
     for file in filenames:
-        if '.info.json' in file:
+        if '.info.json' in file and '.info.json.old' not in file:
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
             print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
             os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...")
