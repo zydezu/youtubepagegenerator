@@ -46,6 +46,8 @@ for video in videoIDs:
             }
             while True:
                 try:
+                        with YoutubeDL(ytdlp_opts) as ytdlp:
+                            ytdlp.download(f"https://www.youtube.com/watch?v={video}")
                         break
                 except:
                         print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
