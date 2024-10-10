@@ -1,21 +1,11 @@
 import subprocess
 import os, sys
+from os import walk
 
 reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
 installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
 
 os.system("")
-
-
-os.system("title " + "Downloading.......")
-
-
-input()
-
-
-
-
-
 
 class bcolors:
     OKBLUE = '\033[94m'
@@ -31,22 +21,6 @@ if 'yt-dlp' not in installed_packages and 'rangehttpserver' not in installed_pac
     print(f"{bcolors.LINE}---------------------------------------")
 
 from yt_dlp import YoutubeDL
-from yt_dlp.utils import DownloadError
-
-# Define the command
-command = [
-    'yt-dlp', '--skip-download',
-    'https://www.youtube.com/watch?v=jOrPYP-HZIY',
-    '--print', '%(title)s'
-]
-
-# os.system('yt-dlp --skip-download https://www.youtube.com/watch?v=jOrPYP-HZIY --print "%(title)s"')
-
-# output = subprocess.check_output(command, shell=True, text=True).replace('\n', '')
-# print(output)
-
-# with open('TEST.txt', 'w', encoding="utf-8") as file:
-#     file.write(output)
 
 ytdlp_opts = {
     "skip_download": True,
@@ -60,15 +34,23 @@ with YoutubeDL(ytdlp_opts) as ytdlp:
 
 print(videoid + '\n' + videotitle)
 
+# videoIDs = next(os.walk(os.path.join(os.getcwd(), "generated")))[1]
+videoIDs = next(os.walk(os.path.join(os.getcwd(), "TEST")))[1]
+for video in videoIDs:
+    print(video)
+    filenames = next(walk(os.path.join(os.getcwd(), "TEST", video, "videos"), (None, None, [])))[2] # [] if no file
+    filetorename = ""
+    for file in filenames:
+        if '.info.json' in file:
+            infofilepath = os.path.join(os.getcwd(), "TEST", video, "videos", file)
+            unixtime = os.path.getmtime(os.path.join(infofilepath))
+            os.rename(os.path.join(infofilepath), 
+                      os.path.join(infofilepath.replace('.info.json', f'.info.json.old{unixtime}')))
+
 ytdlp_opts = {
-    'format': 'bestvideo+bestaudio/best',
-    'postprocessors': [
-        {
-            'key': 'FFmpegVideoRemuxer',
-            'preferedformat': 'mp4',
-        }
-    ],
-    'writeinfojson': True,  # Ensure info.json is written, which contains comments
+    "skip_download": True,
+    'quiet': True,
+    'writeinfojson': True, # Ensure info.json is written, which contains comments
     'getcomments': True,
     'outtmpl': f'TEST/{videoid}/videos/%(title)s.%(ext)s',
 }
