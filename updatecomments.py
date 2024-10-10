@@ -32,8 +32,8 @@ for video in videoIDs:
     for file in filenames:
         if '.info.json' in file:
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] | {i}/{len(videoIDs)}...{bcolors.ENDC}")
-            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] | {i}/{len(videoIDs)}...")
+            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
+            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...")
             infofilepath = os.path.join(os.getcwd(), "generated", video, "videos", file)
             unixtime = os.path.getmtime(os.path.join(infofilepath))
             os.rename(os.path.join(infofilepath), 
