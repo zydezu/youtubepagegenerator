@@ -107,7 +107,7 @@ class VideoWithBackground {
 }
 
 if (!localStorage.ambientMode) {
-    localStorage.setItem("ambientMode", "true");
+    localStorage.setItem("ambientMode", "false");
 }
 const canvas = new VideoWithBackground("ambientvideo", "ambientcanvas");
 function toggleAmbientMode() {
@@ -139,7 +139,7 @@ Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
 document.getElementById("ambientvideo").addEventListener("loadeddata", checkResolution)
 
 function checkResolution() {
-    if (this.videoWidth / this.videoHeight < 1.6) { //4/3 wont fit
+    if (this.videoWidth / this.videoHeight < 1.6) { // 4/3 wont fit
         document.documentElement.setAttribute("style", "--maxwidth: 135vh");
     }
 }
