@@ -30,14 +30,10 @@ for video in videoIDs:
     filenames = next(walk(os.path.join(os.getcwd(), "generated", video, "videos"), (None, None, [])))[2] # [] if no file
     filetorename = ""
     for file in filenames:
-        if '.info.json' in file and '.info.json.old' not in file:
+        if '.info.json' in file:
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
             print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
             os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...")
-            infofilepath = os.path.join(os.getcwd(), "generated", video, "videos", file)
-            unixtime = os.path.getmtime(os.path.join(infofilepath))
-            os.rename(os.path.join(infofilepath), 
-                      os.path.join(infofilepath.replace('.info.json', f'.info.json.old{unixtime}')))
             ytdlp_opts = {
                 "skip_download": True,
                 'writeinfojson': True, # Ensure info.json is written, which contains comments
@@ -46,11 +42,11 @@ for video in videoIDs:
             }
             while True:
                 try:
-                        with YoutubeDL(ytdlp_opts) as ytdlp:
-                            ytdlp.download(f"https://www.youtube.com/watch?v={video}")
-                        break
+                    with YoutubeDL(ytdlp_opts) as ytdlp:
+                        ytdlp.download(f"https://www.youtube.com/watch?v={video}")
+                    break
                 except:
-                        print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-                        print(f"{bcolors.WARNING}Error! Couldn't download...")
-                        print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-                        break
+                    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+                    print(f"{bcolors.WARNING}Error! Couldn't download...")
+                    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+                    break
