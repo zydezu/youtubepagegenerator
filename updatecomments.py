@@ -50,3 +50,4 @@ for video in videoIDs:
                     print(f"{bcolors.WARNING}Error! Couldn't download...")
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
                     break
+            break
