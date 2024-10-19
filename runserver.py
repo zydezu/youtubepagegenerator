@@ -1,6 +1,7 @@
 import subprocess, os
 import sys
 import webbrowser
+import time
 
 os.system("")
 class bcolors:
@@ -28,5 +29,6 @@ if 'rangehttpserver' not in installed_packages:
 
 # make a localhost web server and open generated index.html, since CORS blocks file:// fetching
 os.system("title " + "Running web server...")
+subprocess.Popen(['python', '-m', 'RangeHTTPServer'])
+time.sleep(3)
 webbrowser.open('http://localhost:8000/index.html')
-subprocess.run('python -m RangeHTTPServer', shell=True)

@@ -36,6 +36,7 @@ for video in videoIDs:
             os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...")
             ytdlp_opts = {
                 "skip_download": True,
+                'restrictfilenames': True,
                 'writeinfojson': True, # Ensure info.json is written, which contains comments
                 'getcomments': True,
                 'outtmpl': f'generated/{video}/videos/%(title)s.%(ext)s',
