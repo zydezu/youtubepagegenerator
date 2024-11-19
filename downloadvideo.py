@@ -56,7 +56,7 @@ def startvideodownload():
         'outtmpl': f'generated/{videoid}/videos/%(title)s.%(ext)s',
     }
 
-    os.system("title " + f"Downloading '{videotitle}' [{videoid}]...")
+    os.system("title " + f"Downloading [{videoid}]...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
