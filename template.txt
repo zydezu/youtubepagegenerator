@@ -30,7 +30,7 @@
             <section class="ambientWrapper">
                 <canvas width="22" height="16" class="ambientCanvas" aria-hidden="true" id="ambientcanvas"></canvas>
             </section>
-            <video src="videos/{filename}" type='video/mp4' controls playsinline
+            <video src="videos/{filename}" type="video/mp4" controls playsinline
                 class="mainVideo roundVideo" id="ambientvideo"></video>
             
             <div class="underVideoStats">    

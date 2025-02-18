@@ -53,7 +53,11 @@ def startvideodownload():
         'writeinfojson': True,
         'getcomments': True,
         'writethumbnail': True,
-        'outtmpl': f'generated/{videoid}/videos/%(title)s.%(ext)s',
+        'outtmpl': {
+            'default': f'generated/{videoid}/videos/video.%(ext)s',
+            'infojson': f'generated/{videoid}/videos/video',
+            'thumbnail': f'generated/{videoid}/videos/video.%(ext)s',
+        },    
     }
 
     os.system("title " + f"Downloading [{videoid}]...")
@@ -94,10 +98,10 @@ def startvideodownload():
         with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
             writefile.writelines(outputfile)
 
-    allLines = []
     with open('listofvideos.txt', 'a', encoding="utf-8") as file:
         file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
+    allLines = []
     with open('listofvideos.txt', 'r', encoding="utf-8") as file:
         allLines = file.readlines()
 

@@ -126,7 +126,8 @@ async function read(returndata) {
 
     videoInfo.innerHTML = `
         <hr>
-        <a target="_blank" href="https://youtube.com/watch?v=${data.id}">${data.fulltitle}</a><br/>
+        <a target="_blank" href="https://youtube.com/watch?v=${data.id}">${data.fulltitle}</a> | 
+        <a href="videos/video.mp4" download="${data.fulltitle}.mp4">Download Video</a><br/>
         Views: ${data.view_count} | Duration: ${data.duration_string}
         <br/>Uploaded by: <a target="_blank" href="${data.uploader_url}">${data.channel} (${data.uploader_id})</a> | ${data.channel_follower_count} subscribers
         <br/>Uploaded: ${data.upload_date.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')}
