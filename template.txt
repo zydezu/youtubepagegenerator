@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../style.css">
     <script src="../../scripts/toggleTheme.js" defer></script>
     <script src="../../scripts/canvas.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/context-filter-polyfill/dist/index.min.js"></script>
+    <script src="../../scripts/index.min.js"></script>
     <script src="../../scripts/jsoncommentsreader.js" defer></script>
     <link rel="icon" type="videos/{icon}" href="videos/{icon}">
 </head>

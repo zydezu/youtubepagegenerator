@@ -390,6 +390,7 @@ video.addEventListener('timeupdate', () => {
 
 async function getComments() {
     let idpath = video.src.substr(0, video.src.lastIndexOf('.')) + ".info.json"
+    print(idpath)
     await readFile(idpath);
 }
 
