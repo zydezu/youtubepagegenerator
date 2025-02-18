@@ -72,27 +72,45 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 async function getDislikes(id) {
-    const response = await fetch("https://returnyoutubedislikeapi.com/votes?videoId=" + id);
-    let dislikeresponse = await response.json();
-    document.getElementById("dislikeCounter").innerHTML = dislikeresponse.dislikes
-}
+    try {
+        const response = await fetch("https://returnyoutubedislikeapi.com/votes?videoId=" + id);
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        let dislikeresponse = await response.json();
+        const dislikeCounter = document.getElementById("dislikeCounter");
+        dislikeCounter.innerHTML = dislikeresponse.dislikes;
+    } catch (error) {
+        console.error("Error fetching dislikes:", error);
+        const dislikeCounter = document.getElementById("dislikeCounter");
+        if (dislikeCounter) {
+            dislikeCounter.innerHTML = "N/A";
+        }
+    }}
 
 function readFile(input) {
-    loadedSuccessfully = false;
-    data = ""
+    let loadedSuccessfully = false;
     videoInfo.innerHTML = "Loading information...";
-    commentsBox.innerHTML = ""
-    filterButtons.classList.add("hidden")
-    fetch(input)
-        .then((response) => response.ok ? response.text() : console.log("Video info file doesn't exist!"))
-        .then((returndata) => read(returndata))
-        .catch((error) => fetchError(error)); // javascript fetching protocol
-}
+    commentsBox.innerHTML = "";
+    filterButtons.classList.add("hidden");
 
-function fetchError(error) {
-    console.log(error)
-    errorMessage = error;
-    renderCommentCount()
+    fetch(input)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.text();
+        })
+        .then((returndata) => {
+            read(returndata);
+            loadedSuccessfully = true;
+        })
+        .catch((error) => {
+            console.error("Fetch error:", error);
+            fetchError(error);
+            // Fallback to a local file or display a message
+            videoInfo.innerHTML = "Failed to load information. Please check your connection or the file path.";
+        });
 }
 
 async function read(returndata) {
@@ -119,13 +137,14 @@ async function read(returndata) {
         ${makeLinks(data.description.replace(/\n/g, '<br>'))}
         <hr>
         `;
-    await getDislikes(data.id);
 
     if (data.comments) {
         renderComments(data);
     } else {
         noCommentsMessage();
     }
+
+    await getDislikes(data.id);
 }
 
 function makeLinks(content) {
@@ -390,7 +409,6 @@ video.addEventListener('timeupdate', () => {
 
 async function getComments() {
     let idpath = video.src.substr(0, video.src.lastIndexOf('.')) + ".info.json"
-    print(idpath)
     await readFile(idpath);
 }
 
