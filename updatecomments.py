@@ -25,26 +25,30 @@ from yt_dlp import YoutubeDL
 
 videoIDs = next(os.walk(os.path.join(os.getcwd(), "generated")))[1]
 i = 0
-for video in videoIDs:
+for videoID in videoIDs:
     i+=1
-    filenames = next(walk(os.path.join(os.getcwd(), "generated", video, "videos"), (None, None, [])))[2] # [] if no file
+    filenames = next(walk(os.path.join(os.getcwd(), "generated", videoID, "videos"), (None, None, [])))[2] # [] if no file
     filetorename = ""
     for file in filenames:
         if '.info.json' in file:
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
-            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{video}] - {i}/{len(videoIDs)}...")
+            print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
+            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...")
             ytdlp_opts = {
                 "skip_download": True,
                 'restrictfilenames': True,
                 'writeinfojson': True, # Ensure info.json is written, which contains comments
                 'getcomments': True,
-                'outtmpl': f'generated/{video}/videos/%(title)s.%(ext)s',
+                'outtmpl': {
+                    'default': f'generated/{videoID}/videos/video.%(ext)s',
+                    'infojson': f'generated/{videoID}/videos/video',
+                    'thumbnail': f'generated/{videoID}/videos/video.%(ext)s',
+                },                
             }
             while True:
                 try:
                     with YoutubeDL(ytdlp_opts) as ytdlp:
-                        ytdlp.download(f"https://www.youtube.com/watch?v={video}")
+                        ytdlp.download(f"https://www.youtube.com/watch?v={videoID}")
                     break
                 except:
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")

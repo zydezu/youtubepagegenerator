@@ -86,7 +86,14 @@ async function getDislikes(id) {
         if (dislikeCounter) {
             dislikeCounter.innerHTML = "N/A";
         }
-    }}
+    }
+}
+
+function fetchError(error) {
+    console.log(error)
+    errorMessage = error;
+    renderCommentCount()
+}
 
 function readFile(input) {
     let loadedSuccessfully = false;
@@ -409,7 +416,7 @@ video.addEventListener('timeupdate', () => {
 })
 
 async function getComments() {
-    let idpath = video.src.substr(0, video.src.lastIndexOf('.')) + ".info.json"
+    let idpath = "videos/video.info.json"
     await readFile(idpath);
 }
 
