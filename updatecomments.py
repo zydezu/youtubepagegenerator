@@ -31,6 +31,12 @@ for videoID in videoIDs:
     filetorename = ""
     for file in filenames:
         if '.info.json' in file:
+            # Rename the old info.json file
+            infofilepath = os.path.join(os.getcwd(), "generated", videoID, "videos", file)
+            unixtime = os.path.getmtime(os.path.join(infofilepath))
+            os.rename(os.path.join(infofilepath), 
+                      os.path.join(infofilepath.replace('.info.json', f'.info.json.old{unixtime}')))
+
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
             print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
             os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...")
@@ -43,7 +49,7 @@ for videoID in videoIDs:
                     'default': f'generated/{videoID}/videos/video.%(ext)s',
                     'infojson': f'generated/{videoID}/videos/video',
                     'thumbnail': f'generated/{videoID}/videos/video.%(ext)s',
-                },                
+                },
             }
             while True:
                 try:

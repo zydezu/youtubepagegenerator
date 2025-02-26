@@ -1,7 +1,8 @@
 import subprocess, os
 import sys
 import webbrowser
-from downloadvideo import startvideodownload
+import downloadvideo
+import runserver
 
 os.system("")
 class bcolors:
@@ -10,25 +11,5 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
-videoid = startvideodownload()
-
-print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-print(f"{bcolors.OKBLUE}Starting web server and opening page...")
-print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-
-reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
-installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
-
-# use rangehttpserver as it supports range headers (fixes video scrubbing in the browser)
-if 'rangehttpserver' not in installed_packages:
-    os.system("title " + "Installing packages...")
-    print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-    print(f"{bcolors.OKBLUE}Installing packages...")
-    print(f"{bcolors.LINE}---------------------------------------")
-    subprocess.run('pip install -r requirements.txt', shell=True)
-    print(f"{bcolors.LINE}---------------------------------------")
-
-# make a localhost web server and open generated index.html, since CORS blocks file:// fetching
-os.system("title " + "Running web server...")
-webbrowser.open('http://localhost:8000/generated/{0}/'.format(videoid))
-subprocess.run('python -m RangeHTTPServer', shell=True)
+videoid = downloadvideo.startvideodownload()
+runserver.startserver(url=f"http://localhost:8000/generated/{videoid}/")

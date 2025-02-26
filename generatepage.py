@@ -1,5 +1,5 @@
 import os
-from downloadvideo import startvideodownload
+import downloadvideo
 
 os.system("")
-startvideodownload()
+downloadvideo.startvideodownload()
