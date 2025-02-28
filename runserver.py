@@ -33,3 +33,5 @@ def startserver(url="http://localhost:8000/index.html"):
     subprocess.Popen(['python', '-m', 'RangeHTTPServer'])
     time.sleep(3)
     webbrowser.open(url)
+
+startserver()
