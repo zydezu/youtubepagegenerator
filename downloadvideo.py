@@ -7,14 +7,16 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
-def startvideodownload():
-    os.system("title " + "YouTube Page Generator")
-    print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
-    print(f"{bcolors.LINE}---------------------------------------")
-    link = input(f"{bcolors.WARNING}Link {bcolors.ENDC}> {bcolors.WARNING}")
-    print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-    print(f"{bcolors.OKBLUE}Downloading video...")
-    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+def startvideodownload(url = None, extraInfo = ""):
+    link = url
+    if url == None:
+        os.system("title " + "YouTube Page Generator")
+        print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
+        print(f"{bcolors.LINE}---------------------------------------")
+        link = input(f"{bcolors.WARNING}Link {bcolors.ENDC}> {bcolors.WARNING}")
+        print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
+        print(f"{bcolors.OKBLUE}Downloading video...")
+        print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
 
     reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
     installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
@@ -60,7 +62,7 @@ def startvideodownload():
         },    
     }
 
-    os.system("title " + f"Downloading [{videoid}]...")
+    os.system("title " + f"Downloading {videotitle} [{videoid}] {extraInfo}...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
@@ -70,7 +72,6 @@ def startvideodownload():
                 print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
                 print(f"{bcolors.WARNING}Error! Retrying download...")
                 print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-
 
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Download done! Generating page...")
