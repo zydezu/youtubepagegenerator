@@ -31,7 +31,6 @@ def startserver(url="http://localhost:8000/index.html"):
     # make a localhost web server and open generated index.html, since CORS blocks file:// fetching
     os.system("title " + "Running web server...")
     subprocess.Popen(['python', '-m', 'RangeHTTPServer'])
-    time.sleep(3)
     webbrowser.open(url)
 
 startserver()
