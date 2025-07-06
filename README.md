@@ -81,4 +81,4 @@ There are also other scripts that perform different functions.
 ## To Do
 
 - Download subtitles and convert them to WEBVTT automatically
-- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page <https://internetcheckpoint.page/Q9XTqQbuavI>
+- More YouTube like interface (choose css - new - old?), refering to the internet checkpoints page [https://internetcheckpoint.page/Q9XTqQbuavI](https://internetcheckpoint.page/Q9XTqQbuavI)
