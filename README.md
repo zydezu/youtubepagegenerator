@@ -10,11 +10,33 @@ Generates a HTML page for a YouTube video with a provided link via Python.
 
 Run `generatepage.py`  and paste in the link of the desired video. Designed specifically for YouTube videos, results from other sites may vary.
 
-Outputted pages will be in `generated/[videoID]/`, pages will usually open in browser at `http://localhost:8000/...`
+Outputted pages will be in `generated/[videoID]/`, pages will usually open in browser at `http://localhost:8000/...`.
 
-Alternatively, run `runserver.py` to open a page with a list of archived videos
+Alternatively, run `runserver.py` to open a page with a list of archived videos.
+
+There are also other scripts that perform different functions.
 
 ## Changelog
+
+### 2025-03-23
+
+- ADD: update video entries in `.downloadlater.txt`, `index.html`, and `listofvideos.txt`, refresh video links
+
+### 2025-03-18
+
+- ADD: implement video download functionality from a list, refactor download handling in `downloadvideo.py`
+
+### 2025-02-28
+
+- ADD: include new video entries in `index.html` and `listofvideos.txt`, update `runserver.py` to start server automatically
+
+### 2025-02-26
+
+- REFACTOR: update video download and server handling; rename old info.json files
+
+### 2025-02-18
+
+- Improve script loading when offline
 
 ### 2024-10-10
 
