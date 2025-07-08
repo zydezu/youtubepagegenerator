@@ -8,7 +8,7 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
-def startvideodownload(url = None, extraInfo = ""):
+def startvideodownload(url=None, extraInfo=""):
     link = url
     if url == None:
         os.system("title " + "YouTube Page Generator")
@@ -47,14 +47,14 @@ def startvideodownload(url = None, extraInfo = ""):
             'default': f'generated/{videoid}/videos/video.%(ext)s',
             'infojson': f'generated/{videoid}/videos/video',
             'thumbnail': f'generated/{videoid}/videos/video.%(ext)s',
-        },    
+        },
     }
 
     os.system("title " + f"Downloading {videotitle} [{videoid}] {extraInfo}...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
-                ytdlp.download(link)
+                ytdlp.download([link])
             break
         except:
                 print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")

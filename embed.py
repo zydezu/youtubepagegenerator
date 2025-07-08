@@ -1,4 +1,5 @@
 import discord
+
 class EMBED:
     STANDARD = 0xbc0839
     RED = 0xe0102f
@@ -22,5 +23,5 @@ def show_download_complete(link):
         description=f"Your download has been completed successfully!",
         color=EMBED.GREEN
     )
-    embed.set_footer(text="You can see it at: generated/{link}/")
+    embed.set_footer(text=f"You can see it at: generated/{link}/")
     return embed
