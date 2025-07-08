@@ -1,9 +1,7 @@
 import subprocess
-import os, sys
+import os
 from os import walk
-
-reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
-installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
+from yt_dlp import YoutubeDL
 
 os.system("")
 
@@ -12,16 +10,6 @@ class bcolors:
     WARNING = '\033[93m'
     LINE = '\033[90m'
     ENDC = '\033[0m'
-
-if 'yt-dlp' not in installed_packages and 'rangehttpserver' not in installed_packages:
-    os.system("title " + "Installing packages...")
-    print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-    print(f"{bcolors.OKBLUE}Installing packages...")
-    print(f"{bcolors.LINE}---------------------------------------")
-    subprocess.run('pip install -r requirements.txt', shell=True)
-    print(f"{bcolors.LINE}---------------------------------------")
-
-from yt_dlp import YoutubeDL
 
 videoIDs = next(os.walk(os.path.join(os.getcwd(), "generated")))[1]
 i = 0

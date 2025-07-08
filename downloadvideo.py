@@ -1,5 +1,6 @@
-import subprocess, os, sys
+import os
 from datetime import datetime
+from yt_dlp import YoutubeDL
 
 class bcolors:
     OKBLUE = '\033[94m'
@@ -17,19 +18,6 @@ def startvideodownload(url = None, extraInfo = ""):
         print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
         print(f"{bcolors.OKBLUE}Downloading video...")
         print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-
-    reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
-    installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
-
-    if 'yt-dlp' not in installed_packages:
-        os.system("title " + "Installing packages...")
-        print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-        print(f"{bcolors.OKBLUE}Installing packages...")
-        print(f"{bcolors.LINE}---------------------------------------")
-        subprocess.run('pip install -r requirements.txt', shell=True)
-        print(f"{bcolors.LINE}---------------------------------------")
-
-    from yt_dlp import YoutubeDL
 
     ytdlp_opts = {
         "skip_download": True,
