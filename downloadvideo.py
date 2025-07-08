@@ -1,5 +1,6 @@
-import subprocess, os, sys
+import os
 from datetime import datetime
+from yt_dlp import YoutubeDL
 
 class bcolors:
     OKBLUE = '\033[94m'
@@ -7,7 +8,7 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
-def startvideodownload(url = None, extraInfo = ""):
+def startvideodownload(url=None, extraInfo=""):
     link = url
     if url == None:
         os.system("title " + "YouTube Page Generator")
@@ -17,19 +18,6 @@ def startvideodownload(url = None, extraInfo = ""):
         print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
         print(f"{bcolors.OKBLUE}Downloading video...")
         print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-
-    reqs = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze'])
-    installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
-
-    if 'yt-dlp' not in installed_packages:
-        os.system("title " + "Installing packages...")
-        print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
-        print(f"{bcolors.OKBLUE}Installing packages...")
-        print(f"{bcolors.LINE}---------------------------------------")
-        subprocess.run('pip install -r requirements.txt', shell=True)
-        print(f"{bcolors.LINE}---------------------------------------")
-
-    from yt_dlp import YoutubeDL
 
     ytdlp_opts = {
         "skip_download": True,
@@ -59,14 +47,14 @@ def startvideodownload(url = None, extraInfo = ""):
             'default': f'generated/{videoid}/videos/video.%(ext)s',
             'infojson': f'generated/{videoid}/videos/video',
             'thumbnail': f'generated/{videoid}/videos/video.%(ext)s',
-        },    
+        },
     }
 
     os.system("title " + f"Downloading {videotitle} [{videoid}] {extraInfo}...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
-                ytdlp.download(link)
+                ytdlp.download([link])
             break
         except:
                 print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")

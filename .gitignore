@@ -1,3 +1,5 @@
+.env
 generated/
+.downloadlater.txt
 listofvideos.txt
 index.html
