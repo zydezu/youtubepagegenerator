@@ -1,4 +1,4 @@
-import os, discord, embed, downloadvideo
+import os, discord, embed, downloadvideo, gitimport
 import asyncio
 import functools
 from dotenv import load_dotenv
@@ -60,7 +60,17 @@ async def generatepage(interaction: discord.Interaction, link: str):
     completed_embed = embed.show_download_complete(result)
 
     await message.edit(embed=completed_embed)
-        
+
+@bot.tree.command(
+    name="restart",
+    description="Restart the Discord App"
+)
+@commands.has_permissions(administrator=True)
+async def restart(interaction: discord.Interaction):
+    await interaction.response.send_message("Restarting...")
+    await bot.close()
+    gitimport.restart_bot()
+
 def main():
     bot.run(token = TOKEN)
 
