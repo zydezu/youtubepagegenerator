@@ -1,3 +1,4 @@
+import subprocess
 import os
 from os import walk
 from yt_dlp import YoutubeDL
@@ -9,13 +10,6 @@ class bcolors:
     WARNING = '\033[93m'
     LINE = '\033[90m'
     ENDC = '\033[0m'
-
-def set_terminal_title(title):
-    if os.name == 'nt':  # Windows
-        os.system(f"title {title}")
-    else:  # Unix/Linux/Mac
-        sys.stdout.write(f"\033]0;{title}\007")
-        sys.stdout.flush()
 
 videoIDs = next(os.walk(os.path.join(os.getcwd(), "generated")))[1]
 i = 0
@@ -33,7 +27,7 @@ for videoID in videoIDs:
 
             print(f"{bcolors.LINE}---------------------------------------{bcolors.WARNING}")
             print(f"{bcolors.OKBLUE}Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...{bcolors.ENDC}")
-            set_terminal_title(f"Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...")
+            os.system("title " + f"Updating '{file.replace('.info.json', '')}' [{videoID}] - {i}/{len(videoIDs)}...")
             ytdlp_opts = {
                 "skip_download": True,
                 'restrictfilenames': True,
