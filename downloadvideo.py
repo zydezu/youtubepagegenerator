@@ -8,6 +8,8 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
+VIDEO_LIST = "listofvideos.txt"
+
 def set_terminal_title(title):
     if os.name == 'nt':  # Windows
         os.system(f"title {title}")
@@ -94,12 +96,26 @@ def startvideodownload(url=None, extraInfo=""):
         with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
             writefile.writelines(outputfile)
 
-    with open('listofvideos.txt', 'a', encoding="utf-8") as file:
-        file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    # Append the new line
+    with open(VIDEO_LIST, 'a', encoding="utf-8") as file:
+        file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(
+            videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-    allLines = []
-    with open('listofvideos.txt', 'r', encoding="utf-8") as file:
+    # Read all lines
+    with open(VIDEO_LIST, 'r', encoding="utf-8") as file:
         allLines = file.readlines()
+
+    # Remove duplicates while preserving order
+    seen = set()
+    uniqueLines = []
+    for line in allLines:
+        if line not in seen:
+            seen.add(line)
+            uniqueLines.append(line)
+
+    # Overwrite the file with deduplicated lines
+    with open(VIDEO_LIST, 'w', encoding="utf-8") as file:
+        file.writelines(uniqueLines)
 
     with open('index.html', 'w', encoding="utf-8") as file:
         file.writelines("""<!DOCTYPE html>
