@@ -1,9 +1,7 @@
-import subprocess, os
-import sys
-import webbrowser
-import time
+import subprocess, os, sys, webbrowser
 
 os.system("")
+
 class bcolors:
     OKBLUE = '\033[94m'
     WARNING = '\033[93m'
