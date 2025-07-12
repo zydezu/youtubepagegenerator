@@ -18,6 +18,14 @@ There are also other scripts that perform different functions.
 
 ## Changelog
 
+### 2025-07-13
+
+- FIX: fixed some linux bugs
+
+### 2025-07-08
+
+- FEAT: added Discord app functionality
+
 ### 2025-03-23
 
 - ADD: update video entries in `.downloadlater.txt`, `index.html`, and `listofvideos.txt`, refresh video links
