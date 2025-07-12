@@ -1,4 +1,4 @@
-import os
+import os, sys
 from datetime import datetime
 from yt_dlp import YoutubeDL
 
@@ -8,10 +8,17 @@ class bcolors:
     LINE = '\033[90m'
     ENDC = '\033[0m'
 
+def set_terminal_title(title):
+    if os.name == 'nt':  # Windows
+        os.system(f"title {title}")
+    else:  # Unix/Linux/Mac
+        sys.stdout.write(f"\033]0;{title}\007")
+        sys.stdout.flush()
+
 def startvideodownload(url=None, extraInfo=""):
     link = url
     if url == None:
-        os.system("title " + "YouTube Page Generator")
+        set_terminal_title("YouTube Page Generator")
         print(f"{bcolors.OKBLUE}Enter the link of the {bcolors.WARNING}video{bcolors.OKBLUE} to generate a page for...{bcolors.ENDC}")
         print(f"{bcolors.LINE}---------------------------------------")
         link = input(f"{bcolors.WARNING}Link {bcolors.ENDC}> {bcolors.WARNING}")
@@ -50,7 +57,7 @@ def startvideodownload(url=None, extraInfo=""):
         },
     }
 
-    os.system("title " + f"Downloading {videotitle} [{videoid}] {extraInfo}...")
+    set_terminal_title(f"Downloading {videotitle} [{videoid}] {extraInfo}...")
     while True:
         try:
             with YoutubeDL(ytdlp_opts) as ytdlp:
@@ -64,7 +71,7 @@ def startvideodownload(url=None, extraInfo=""):
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Download done! Generating page...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-    os.system("title " + "Generating page...")
+    set_terminal_title("Generating page...")
 
     def basestring(lst):
         if not lst:
