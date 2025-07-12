@@ -63,7 +63,7 @@ async def generatepage(interaction: discord.Interaction, link: str):
 
 @bot.tree.command(
     name="restart",
-    description="Restart the Discord App"
+    description="Restart the app"
 )
 @commands.has_permissions(administrator=True)
 async def restart(interaction: discord.Interaction):
