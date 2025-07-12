@@ -130,7 +130,7 @@ def startvideodownload(url=None, extraInfo=""):
     <body>
     {0}
     </body>
-    </html>""".format("".join(allLines)))
+    </html>""".format("".join(uniqueLines)))
 
     print("File written to index.html!")
 
