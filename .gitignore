@@ -1,5 +1,6 @@
-.env
+__pycache__/
 generated/
 .downloadlater.txt
-listofvideos.txt
+.env
 index.html
+listofvideos.txt
