@@ -109,9 +109,15 @@ def startvideodownload(url=None, extraInfo=""):
     seen = set()
     uniqueLines = []
     for line in allLines:
-        if line not in seen:
-            seen.add(line)
-            uniqueLines.append(line)
+        # Extract title and video ID (ignore timestamp)
+        parts = line.strip().split('|')
+        if len(parts) >= 2:
+            title = parts[0].strip()
+            video_link = parts[1].strip()
+            key = (title, video_link)
+            if key not in seen:
+                seen.add(key)
+                uniqueLines.append(line)
 
     # Overwrite the file with deduplicated lines
     with open(VIDEO_LIST, 'w', encoding="utf-8") as file:
