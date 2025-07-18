@@ -22,7 +22,7 @@ def startserver(url="http://localhost:9999/index.html"):
 
     # make a localhost web server and open generated index.html, since CORS blocks file:// fetching
     set_terminal_title("Running web server...")
-    subprocess.Popen(['python', '-m', 'RangeHTTPServer'])
+    subprocess.Popen(['python', '-m', 'RangeHTTPServer', '9999'])
     webbrowser.open(url)
 
 if __name__ == "__main__":
