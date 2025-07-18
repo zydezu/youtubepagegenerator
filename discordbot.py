@@ -72,6 +72,7 @@ async def restart(interaction: discord.Interaction):
     gitimport.restart_bot()
 
 def main():
+    runserver.startserver()
     bot.run(token = TOKEN)
 
 if __name__ ==  "__main__":
