@@ -15,7 +15,7 @@ def set_terminal_title(title):
         sys.stdout.write(f"\033]0;{title}\007")
         sys.stdout.flush()
 
-def startserver(url="http://localhost:8000/index.html"):
+def startserver(url="http://localhost:8001/index.html"):
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
     print(f"{bcolors.OKBLUE}Starting web server and opening page...")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
