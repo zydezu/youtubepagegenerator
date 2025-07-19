@@ -1,4 +1,6 @@
-import os, sys, http.server, ssl, threading, webbrowser, time
+import os, sys, ssl, threading, webbrowser, time
+from socketserver import ThreadingMixIn
+import http.server
 
 os.system("")
 
@@ -15,20 +17,20 @@ def set_terminal_title(title):
         sys.stdout.write(f"\033]0;{title}\007")
         sys.stdout.flush()
 
+class ThreadingHTTPServer(ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+
 def run_https_server(port=9999, cert='cert.pem', key='key.pem'):
     handler = http.server.SimpleHTTPRequestHandler
     server_address = ('', port)
-    httpd = http.server.HTTPServer(server_address, handler)
+    httpd = ThreadingHTTPServer(server_address, handler)
 
-    try:
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        context.load_cert_chain(certfile=cert, keyfile=key)
-        httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(certfile=cert, keyfile=key)
+    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
 
-        print(f"{bcolors.OKBLUE}Serving on https://localhost:{port}{bcolors.ENDC}")
-        httpd.serve_forever()
-    except Exception as e:
-        print(f"{bcolors.WARNING}Failed to start server: {e}{bcolors.ENDC}")
+    print(f"Serving on https://localhost:{port}")
+    httpd.serve_forever()
 
 def startserver(url="https://localhost:9999/index.html"):
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
