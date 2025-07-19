@@ -20,10 +20,13 @@ def set_terminal_title(title):
 class ThreadingHTTPServer(ThreadingMixIn, http.server.HTTPServer):
     daemon_threads = True
 
+class RangeRequestHandler(http.server.SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"  # enable HTTP/1.1 to support Range
+
 def run_https_server(port=9999, cert='cert.pem', key='key.pem'):
-    handler = http.server.SimpleHTTPRequestHandler
     server_address = ('', port)
-    httpd = ThreadingHTTPServer(server_address, handler)
+
+    httpd = ThreadingHTTPServer(server_address, RangeRequestHandler)
 
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(certfile=cert, keyfile=key)
