@@ -1,3 +1,56 @@
 2025-07-18 12:16:39,022 [WARNING] PyNaCl is not installed, voice will NOT be supported
 2025-07-18 12:16:39,094 [INFO] logging in using static token
 2025-07-18 12:16:40,569 [INFO] Shard ID None has connected to Gateway (Session ID: acacd0533bc6e9ba83f38e2a68835453).
+2025-07-18 12:19:50,739 [ERROR] Task exception was never retrieved
+future: <Task finished name='CommandTree-invoker' coro=<CommandTree._from_interaction.<locals>.wrapper() done, defined at /home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/app_commands/tree.py:1149> exception=SystemExit(1)>
+Traceback (most recent call last):
+  File "/mnt/bigdrive/archive/videoarchive/youtubepagegenerator/discordbot.py", line 80, in <module>
+    main()
+  File "/mnt/bigdrive/archive/videoarchive/youtubepagegenerator/discordbot.py", line 76, in main
+    bot.run(token = TOKEN)
+  File "/home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/client.py", line 906, in run
+    asyncio.run(runner())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 641, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 1987, in _run_once
+    handle._run()
+  File "/usr/lib/python3.12/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/app_commands/tree.py", line 1151, in wrapper
+    await self._call(interaction)
+  File "/home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zyserver/.local/share/virtualenvs/youtubepagegenerator-8U_ezv4K/lib/python3.12/site-packages/discord/app_commands/commands.py", line 858, in _do_call
+    return await self._callback(interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/bigdrive/archive/videoarchive/youtubepagegenerator/discordbot.py", line 72, in restart
+    gitimport.restart_bot()
+  File "/mnt/bigdrive/archive/videoarchive/youtubepagegenerator/gitimport.py", line 99, in restart_bot
+    sys.exit(1)
+SystemExit: 1
+2025-07-18 12:19:52,711 [WARNING] PyNaCl is not installed, voice will NOT be supported
+2025-07-18 12:19:52,713 [INFO] logging in using static token
+2025-07-18 12:19:53,654 [INFO] Shard ID None has connected to Gateway (Session ID: cf9603b6dff365e29ea1f481a14c4ba4).
+2025-07-18 12:49:33,543 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 12:57:07,510 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 12:59:11,461 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 13:25:32,151 [WARNING] Can't keep up, shard ID None websocket is 13.3s behind.
+2025-07-18 13:58:23,589 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 16:34:01,084 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 19:01:35,955 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 19:30:20,054 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-18 20:52:42,091 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-19 00:08:29,343 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-19 01:29:44,258 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
+2025-07-19 02:48:42,068 [INFO] Shard ID None has successfully RESUMED session cf9603b6dff365e29ea1f481a14c4ba4.
