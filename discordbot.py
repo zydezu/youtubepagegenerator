@@ -72,8 +72,20 @@ async def restart(interaction: discord.Interaction):
     gitimport.restart_bot()
 
 def main():
-    runserver.startserver()
-    bot.run(token = TOKEN)
+    # Start web server in its own thread
+    import threading
+
+    def run_server():
+        try:
+            runserver.startserver()
+        except Exception as e:
+            print(f"[ERROR] Web server failed: {e}")
+
+    server_thread = threading.Thread(target=run_server)
+    server_thread.start()
+
+    # Now run the bot
+    bot.run(token=TOKEN)
 
 if __name__ ==  "__main__":
     freeze_support()
