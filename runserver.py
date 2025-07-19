@@ -1,4 +1,4 @@
-import subprocess, os, sys, webbrowser
+import os, sys, http.server, ssl, threading, webbrowser
 
 os.system("")
 
@@ -15,14 +15,31 @@ def set_terminal_title(title):
         sys.stdout.write(f"\033]0;{title}\007")
         sys.stdout.flush()
 
-def startserver(url="http://localhost:9999/index.html"):
+def run_https_server(port=9999, cert='cert.pem', key='key.pem'):
+    handler = http.server.SimpleHTTPRequestHandler
+    server_address = ('', port)
+    httpd = http.server.HTTPServer(server_address, handler)
+
+    # Use SSLContext instead of deprecated wrap_socket
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(certfile=cert, keyfile=key)
+    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+
+    print(f"{bcolors.OKBLUE}Serving on https://localhost:{port}{bcolors.ENDC}")
+    httpd.serve_forever()
+
+def startserver(url="https://localhost:9999/index.html"):
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-    print(f"{bcolors.OKBLUE}Starting web server and opening page...")
+    print(f"{bcolors.OKBLUE}Starting HTTPS web server and opening page...{bcolors.ENDC}")
     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
 
-    # make a localhost web server and open generated index.html, since CORS blocks file:// fetching
-    set_terminal_title("Running web server...")
-    subprocess.Popen(['python', '-m', 'RangeHTTPServer', '9999'])
+    set_terminal_title("Running HTTPS web server...")
+
+    # Run the server in a thread so we can open the browser without blocking
+    thread = threading.Thread(target=run_https_server)
+    thread.start()
+
+    # Open the web page
     webbrowser.open(url)
 
 if __name__ == "__main__":
