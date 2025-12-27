@@ -1,5 +1,6 @@
 rangehttpserver==1.3.3
 yt_dlp
+yt-dlp-ejs
 discord
 python-dotenv
 gitpython
