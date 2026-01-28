@@ -30,7 +30,8 @@ def startvideodownload(url=None, extraInfo=""):
 
     ytdlp_opts = {
         "skip_download": True,
-        'quiet': True
+        'quiet': True,
+        'cookiefile': 'cookies.txt',
     }
 
     with YoutubeDL(ytdlp_opts) as ytdlp:
@@ -67,6 +68,7 @@ def startvideodownload(url=None, extraInfo=""):
                 'infojson': f'generated/{videoid}/videos/video',
                 'thumbnail': f'generated/{videoid}/videos/video.%(ext)s',
             },
+            'cookiefile': 'cookies.txt',
         }
 
         set_terminal_title(f"Downloading {videotitle} [{videoid}] {extraInfo}...")

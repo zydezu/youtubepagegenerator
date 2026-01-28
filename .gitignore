@@ -2,5 +2,6 @@ __pycache__/
 generated/
 .downloadlater.txt
 .env
+cookies.txt
 index.html
 listofvideos.txt
