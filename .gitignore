@@ -1,6 +1,6 @@
 __pycache__/
 generated/
-.downloadlater.txt
+downloadlater.txt
 .env
 cookies.txt
 index.html

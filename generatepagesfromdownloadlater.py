@@ -1,7 +1,7 @@
 import os
 import downloadvideo
 
-DOWNLOADLATERFILE = '.downloadlater.txt'
+DOWNLOADLATERFILE = 'downloadlater.txt'
 
 os.system("")
 
