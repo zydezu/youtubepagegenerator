@@ -143,7 +143,6 @@ def startvideodownload(url=None, extraInfo=""):
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Archived Videos</title>
             <link rel="stylesheet" href="style.css">
-            <style>body{{margin:15px;}}</style>
         </head>
         <body>
         {0}
