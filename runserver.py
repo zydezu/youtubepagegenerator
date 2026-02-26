@@ -40,6 +40,26 @@ def startserver(path="/index.html"):
     server_proc = subprocess.Popen([VENV_PYTHON, '-m', 'RangeHTTPServer', str(port)])
     
     webbrowser.open(url)
+    time.sleep(1)
+    
+    try:
+        while True:
+            time.sleep(2)
+            if os.name == 'nt':
+                result = subprocess.run(['tasklist'], capture_output=True, text=True)
+                if 'chrome' not in result.stdout.lower() and 'firefox' not in result.stdout.lower():
+                    break
+            else:
+                result = subprocess.run(['pgrep', '-f', 'chrome|firefox|brave|edge'], capture_output=True)
+                if result.returncode != 0:
+                    break
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server_proc.terminate()
+        server_proc.wait()
+        print(f"\n{bcolors.WARNING}Server stopped.{bcolors.ENDC}")
+
 
 if __name__ == "__main__":
     startserver()
