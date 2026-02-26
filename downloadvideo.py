@@ -77,7 +77,7 @@ def startvideodownload(url=None, extraInfo=""):
                 with YoutubeDL(ytdlp_opts) as ytdlp:
                     ytdlp.download([link])
                 break
-            except:
+            except Exception:
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
                     print(f"{bcolors.WARNING}Error! Retrying download...")
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
@@ -92,9 +92,10 @@ def startvideodownload(url=None, extraInfo=""):
                 return ""
             common_sub = lst[0]
             for string in lst[1:]:
-                common_sub = ''.join(c1 for c1, c2 in zip(common_sub, string) if c1 == c2)
                 if not common_sub:
                     break
+                while not string.startswith(common_sub):
+                    common_sub = common_sub[:-1]
             return common_sub
 
         fileslist = os.listdir('generated/{0}/videos'.format(videoid))
@@ -108,30 +109,25 @@ def startvideodownload(url=None, extraInfo=""):
             with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
                 writefile.writelines(outputfile)
 
-        # Append the new line
         with open(VIDEO_LIST, 'a', encoding="utf-8") as file:
             file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(
                 videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-        # Read all lines
         with open(VIDEO_LIST, 'r', encoding="utf-8") as file:
             allLines = file.readlines()
 
-        # Remove duplicates while preserving order
-        seen = set()
+        seen = {}
         uniqueLines = []
         for line in allLines:
-            # Extract title and video ID (ignore timestamp)
             parts = line.strip().split('|')
             if len(parts) >= 2:
                 title = parts[0].strip()
                 video_link = parts[1].strip()
                 key = (title, video_link)
                 if key not in seen:
-                    seen.add(key)
+                    seen[key] = True
                     uniqueLines.append(line)
 
-        # Overwrite the file with deduplicated lines
         with open(VIDEO_LIST, 'w', encoding="utf-8") as file:
             file.writelines(uniqueLines)
 

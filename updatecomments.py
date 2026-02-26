@@ -1,4 +1,5 @@
 import os
+import sys
 from os import walk
 from yt_dlp import YoutubeDL
 
@@ -50,7 +51,7 @@ for videoID in videoIDs:
                     with YoutubeDL(ytdlp_opts) as ytdlp:
                         ytdlp.download(f"https://www.youtube.com/watch?v={videoID}")
                     break
-                except:
+                except Exception:
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
                     print(f"{bcolors.WARNING}Error! Couldn't download...")
                     print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")

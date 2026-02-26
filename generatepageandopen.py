@@ -10,4 +10,4 @@ class bcolors:
     ENDC = '\033[0m'
 
 videoid = downloadvideo.startvideodownload()
-runserver.startserver(url=f"http://localhost:9999/generated/{videoid}/")
+runserver.startserver(path=f"/generated/{videoid}/")
