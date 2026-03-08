@@ -1,7 +1,7 @@
 [project]
 name = "youtubepagegenerator"
 version = "0.1.0"
-description = "Add your description here"
+description = "Various tools to archive YouTube videos"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
