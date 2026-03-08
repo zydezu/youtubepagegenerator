@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, subprocess
 from datetime import datetime
 from yt_dlp import YoutubeDL
 
@@ -17,7 +17,16 @@ def set_terminal_title(title):
         sys.stdout.write(f"\033]0;{title}\007")
         sys.stdout.flush()
 
+def check_yt_version():
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "-U", "yt-dlp"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+
 def startvideodownload(url=None, extraInfo=""):
+    check_yt_version()
+
     link = url
     if url == None:
         set_terminal_title("YouTube Page Generator")
