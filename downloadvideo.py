@@ -9,6 +9,7 @@ class bcolors:
     ENDC = '\033[0m'
 
 VIDEO_LIST = "listofvideos.txt"
+FAILED_DOWNLOADS = "downloadlater.txt"
 
 def set_terminal_title(title):
     if os.name == 'nt':  # Windows
@@ -43,10 +44,28 @@ def startvideodownload(url=None, extraInfo=""):
         'cookiefile': 'cookies.txt',
     }
 
-    with YoutubeDL(ytdlp_opts) as ytdlp:
-        info_dict = ytdlp.extract_info(link, download=False)
-        videoid = info_dict.get('id', None)
-        videotitle = info_dict.get('title', None)
+    try:
+        with YoutubeDL(ytdlp_opts) as ytdlp:
+            info_dict = ytdlp.extract_info(link, download=False)
+            videoid = info_dict.get('id', None)
+            videotitle = info_dict.get('title', None)
+    except Exception:
+        print(f"{bcolors.WARNING}Failed to extract video info! Adding to failed downloads.{bcolors.ENDC}")
+        with open(FAILED_DOWNLOADS, 'a', encoding="utf-8") as f:
+            f.write(f"{link}\n")
+        return None
+
+    if info_dict is None:
+        return None
+
+    videoid = info_dict.get('id', None)
+    videotitle = info_dict.get('title', None)
+
+    if videoid is None or videotitle is None:
+        print(f"{bcolors.WARNING}Failed to get video info! Adding to failed downloads.{bcolors.ENDC}")
+        with open(FAILED_DOWNLOADS, 'a', encoding="utf-8") as f:
+            f.write(f"{link}\n")
+        return None
 
     if 'entries' in info_dict:
         print(f"{bcolors.OKBLUE}Playlist detected with {len(info_dict['entries'])} videos!{bcolors.ENDC}")
@@ -54,25 +73,25 @@ def startvideodownload(url=None, extraInfo=""):
         for entry in info_dict['entries']:
             video_url = entry.get('webpage_url')
             video_id = startvideodownload(video_url, extraInfo="(from playlist)")
-            video_ids.append(video_id)
+            if video_id is not None:
+                video_ids.append(video_id)
         return video_ids
-    else:
 
-        ytdlp_opts = {
-            'format': 'bestvideo+bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegVideoRemuxer',
-                'preferedformat': 'mp4',
-            }],
-            'restrictfilenames': True,
-            'addmetadata': True,
-            'subtitlesformat': 'best',
-            'writesubtitles': True,
-            'writeautomaticsub': True,
-            'writeinfojson': True,
-            'getcomments': True,
-            'writethumbnail': True,
-            'outtmpl': {
+    ytdlp_opts = {
+        'format': 'bestvideo+bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegVideoRemuxer',
+            'preferedformat': 'mp4',
+        }],
+        'restrictfilenames': True,
+        'addmetadata': True,
+        'subtitlesformat': 'best',
+        'writesubtitles': True,
+        'writeautomaticsub': True,
+        'writeinfojson': True,
+        'getcomments': True,
+        'writethumbnail': True,
+        'outtmpl': {
                 'default': f'generated/{videoid}/videos/video.%(ext)s',
                 'infojson': f'generated/{videoid}/videos/video',
                 'thumbnail': f'generated/{videoid}/videos/video.%(ext)s',
@@ -80,68 +99,77 @@ def startvideodownload(url=None, extraInfo=""):
             'cookiefile': 'cookies.txt',
         }
 
-        set_terminal_title(f"Downloading {videotitle} [{videoid}] {extraInfo}...")
-        while True:
-            try:
-                with YoutubeDL(ytdlp_opts) as ytdlp:
-                    ytdlp.download([link])
+    set_terminal_title(f"Downloading {videotitle} [{videoid}] {extraInfo}...")
+    max_retries = 3
+    retries = 0
+    while True:
+        try:
+            with YoutubeDL(ytdlp_opts) as ytdlp:
+                ytdlp.download([link])
+            break
+        except Exception:
+            retries += 1
+            if retries >= max_retries:
+                print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}Download failed after {max_retries} attempts!{bcolors.ENDC}")
+                with open(FAILED_DOWNLOADS, 'a', encoding="utf-8") as f:
+                    f.write(f"{link}\n")
+                return None
+            print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+            print(f"{bcolors.WARNING}Error! Retrying download...")
+            print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+
+    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}Download done! Generating page...")
+    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+    set_terminal_title("Generating page...")
+
+    def basestring(lst):
+        if not lst:
+            return ""
+        common_sub = lst[0]
+        for string in lst[1:]:
+            if not common_sub:
                 break
-            except Exception:
-                    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-                    print(f"{bcolors.WARNING}Error! Retrying download...")
-                    print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
+            while not string.startswith(common_sub):
+                common_sub = common_sub[:-1]
+        return common_sub
 
-        print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-        print(f"{bcolors.OKBLUE}Download done! Generating page...")
-        print(f"{bcolors.LINE}---------------------------------------{bcolors.ENDC}")
-        set_terminal_title("Generating page...")
+    fileslist = os.listdir('generated/{0}/videos'.format(videoid))
+    base = basestring(fileslist)[:-1]
+    filename = base + '.mp4'
+    imagepath = base + '.webp'
 
-        def basestring(lst):
-            if not lst:
-                return ""
-            common_sub = lst[0]
-            for string in lst[1:]:
-                if not common_sub:
-                    break
-                while not string.startswith(common_sub):
-                    common_sub = common_sub[:-1]
-            return common_sub
+    with open('template.txt', 'r', encoding="utf-8") as file:
+        templatefile = file.read()
+        outputfile = templatefile.format(videotitle=videotitle, filename=filename, icon=imagepath)
+        with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
+            writefile.writelines(outputfile)
 
-        fileslist = os.listdir('generated/{0}/videos'.format(videoid))
-        base = basestring(fileslist)[:-1]
-        filename = base + '.mp4'
-        imagepath = base + '.webp'
+    with open(VIDEO_LIST, 'a', encoding="utf-8") as file:
+        file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(
+            videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
-        with open('template.txt', 'r', encoding="utf-8") as file:
-            templatefile = file.read()
-            outputfile = templatefile.format(videotitle=videotitle, filename=filename, icon=imagepath)
-            with open("generated/{0}/index.html".format(videoid), "w", encoding="utf-8") as writefile:
-                writefile.writelines(outputfile)
+    with open(VIDEO_LIST, 'r', encoding="utf-8") as file:
+        allLines = file.readlines()
 
-        with open(VIDEO_LIST, 'a', encoding="utf-8") as file:
-            file.write("""\t{0} | <a href="generated/{1}/">generated/{1}/</a> | {2}<br/>\n""".format(
-                videotitle, videoid, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    seen = {}
+    uniqueLines = []
+    for line in allLines:
+        parts = line.strip().split('|')
+        if len(parts) >= 2:
+            title = parts[0].strip()
+            video_link = parts[1].strip()
+            key = (title, video_link)
+            if key not in seen:
+                seen[key] = True
+                uniqueLines.append(line)
 
-        with open(VIDEO_LIST, 'r', encoding="utf-8") as file:
-            allLines = file.readlines()
+    with open(VIDEO_LIST, 'w', encoding="utf-8") as file:
+        file.writelines(uniqueLines)
 
-        seen = {}
-        uniqueLines = []
-        for line in allLines:
-            parts = line.strip().split('|')
-            if len(parts) >= 2:
-                title = parts[0].strip()
-                video_link = parts[1].strip()
-                key = (title, video_link)
-                if key not in seen:
-                    seen[key] = True
-                    uniqueLines.append(line)
-
-        with open(VIDEO_LIST, 'w', encoding="utf-8") as file:
-            file.writelines(uniqueLines)
-
-        with open('index.html', 'w', encoding="utf-8") as file:
-            file.writelines("""<!DOCTYPE html>
+    with open('index.html', 'w', encoding="utf-8") as file:
+        file.writelines("""<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -154,6 +182,6 @@ def startvideodownload(url=None, extraInfo=""):
         </body>
         </html>""".format("".join(uniqueLines)))
 
-        print("File written to index.html!")
+    print("File written to index.html!")
 
-        return videoid
+    return videoid
